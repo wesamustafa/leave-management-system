@@ -1,0 +1,112 @@
+<div class="bg-slate-50/50 text-slate-800 antialiased h-screen overflow-hidden flex">
+
+  <!-- Backdrop for Mobile Sidebar (يغلق القائمة عند الضغط عليه في الشاشات الصغيرة)[cite: 1] -->
+  <div *ngIf="(sidebarService.isMobile$ | async) && (sidebarService.isOpen$ | async)"
+       (click)="sidebarService.close()"
+       class="fixed inset-0 bg-slate-900/40 z-20 transition-opacity duration-300">
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 1. LEFT SIDEBAR (يتم التحكم بكلاساته ديناميكياً)[cite: 1] -->
+  <!-- ========================================== -->
+  <aside [class.w-64]="(sidebarService.isOpen$ | async) && !(sidebarService.isMobile$ | async)"
+         [class.w-\[76px\]]="!(sidebarService.isOpen$ | async) && !(sidebarService.isMobile$ | async)"
+         [class.translate-x-0]="(sidebarService.isMobile$ | async) && (sidebarService.isOpen$ | async)"
+         [class.-translate-x-full]="(sidebarService.isMobile$ | async) && !(sidebarService.isOpen$ | async)"
+         class="duration-300 ease-in-out fixed inset-y-0 left-0 lg:relative bg-slate-900 text-slate-300 flex flex-col justify-between shrink-0 border-r border-slate-800 z-30 overflow-hidden">
+    
+    <div>
+      <!-- Logo Brand -->
+      <div class="h-16 flex items-center px-6 gap-3 border-b border-slate-800/80 bg-slate-950 shrink-0">
+        <div class="bg-violet-600 text-white p-2 rounded-lg flex items-center justify-center shrink-0">
+           <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </div>
+        <!-- يختفي النص عند تصغير القائمة في الديسك توب -->
+        <span *ngIf="sidebarService.isOpen$ | async" class="font-bold text-white text-lg tracking-wide transition-opacity">
+          Talent<span class="text-violet-400">Hub</span>
+        </span>
+      </div>
+
+      <!-- Links (يمكنك تحويلها إلى Component منفصل لاحقاً إن أردت) -->
+      <nav class="mt-6 px-4 space-y-1">
+        
+
+         <a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-violet-400 font-semibold transition-all" routerLink="/dashboard"
+         routerLinkActive="bg-violet-600/15 text-violet-400 !font-semibold"
+         [routerLinkActiveOptions]="{ exact: true }">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+          </svg>
+          <span *ngIf="sidebarService.isOpen$ | async">Dashboard</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-all font-medium" routerLink="/employee"
+        routerLinkActive="bg-violet-600/15 text-violet-400 !font-semibold">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span *ngIf="sidebarService.isOpen$ | async">Employees</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-all font-medium" routerLink="/leave-request"
+        routerLinkActive="bg-violet-600/15 text-violet-400 !font-semibold">
+       <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 12v2.25l1.5 1.5" />
+        </svg>
+          <span *ngIf="sidebarService.isOpen$ | async">Leave Request</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- User Profile Footer -->
+    <div class="p-4 border-t border-slate-800 bg-slate-950/40 shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-violet-500/10 text-violet-400 flex items-center justify-center font-bold text-sm shrink-0">
+          <span class="first-letter:uppercase">{{avatarLetter}}</span>
+        </div>
+        <div *ngIf="sidebarService.isOpen$ | async" class="overflow-hidden">
+          <p class="text-sm font-semibold text-white truncate first-letter:uppercase">{{loggedUserData.employeeName}}</p>
+          <p class="text-[11px] text-slate-500 tracking-wider truncate uppercase">{{loggedUserData.role}}</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN WORKSPACE                          -->
+  <!-- ========================================== -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    
+    <!-- Top Header -->
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 lg:px-8 z-10 shrink-0">
+      <!-- زر التحكم في الـ Sidebar يستدعي الـ toggle() مباشرة[cite: 1] -->
+      <button (click)="sidebarService.toggle()" class="p-2 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all cursor-pointer">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+     <!-- Welcome & Sign Out -->
+      <div class="flex items-center gap-6">
+        <div class="text-sm">
+          <span class="text-slate-400 mr-2">Welcome,</span> 
+          <span class="font-semibold text-slate-800">{{loggedUserData.emailId}}</span>
+        </div>
+        <button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:text-red-600 hover:border-red-200 hover:bg-red-50 text-sm font-semibold transition-all shadow-sm cursor-pointer" (click)="logout()">
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Sign Out
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable Content Dynamic Body -->
+    <main class="flex-1 overflow-y-auto p-6 lg:p-8">
+      <!-- هنا يتم عرض الصفحات المختلفة تلقائياً بناءً على الـ Route النشط -->
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</div>
