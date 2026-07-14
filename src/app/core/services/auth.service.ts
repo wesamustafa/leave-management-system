@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { ILogin, ILoginResponse } from '../models/auth';
 import { Observable } from 'rxjs';
+import { StorageKey } from '../enums/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +14,9 @@ export class AuthService {
   constructor() { }
   login(data:ILogin):Observable<ILoginResponse>{
     return this.http.post<ILoginResponse>(`${this.baseUrl}/login`, data)
+  }
+  isLoggedIn(): boolean {
+    const user = localStorage.getItem(StorageKey.LEAVE_USER);
+    return !!user; 
   }
 }
