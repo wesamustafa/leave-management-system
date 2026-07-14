@@ -1,0 +1,140 @@
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 ">
+ 
+ <section class="xl:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden w-full">
+    <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+      <div>
+        <h2 class="text-base font-bold text-slate-900">Active Roster</h2>
+        <p class="text-xs text-slate-400 mt-0.5">Currently registered team members on this server.</p>
+      </div>
+      <!-- شارة العدد الإجمالي -->
+      <span class="text-xs font-semibold text-violet-600 bg-violet-50 px-2.5 py-1 rounded-full">Total: 3 Members</span>
+    </div>
+    
+    <!-- Table Container -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-slate-50/70 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+            <th class="py-3.5 px-6">Employee</th>
+            <th class="py-3.5 px-6">Department</th>
+            <th class="py-3.5 px-6">Status</th>
+            <th class="py-3.5 px-6 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+          
+          <!-- Row 1 -->
+          <tr class="hover:bg-slate-50/40 transition-all">
+            <td class="py-4 px-6 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-xs">
+                AH
+              </div>
+              <div>
+                <div class="font-semibold text-slate-900">Aly Hegazi</div>
+                <div class="text-xs text-slate-400">aly.hegazi&#64;talenthub.com</div>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">UI Design</span>
+            </td>
+            <td class="py-4 px-6">
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
+                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                Active
+              </span>
+            </td>
+            <td class="py-4 px-6 text-right">
+              <div class="flex items-center justify-end gap-2">
+                <!-- Edit Button -->
+                <button class="p-1.5 text-slate-400 hover:text-violet-600 hover:bg-violet-50 rounded-md transition-all" title="Edit Employee">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </button>
+                <!-- Delete Button -->
+                <button class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-all" title="Delete Employee">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+    
+          <!-- Row 2 -->
+          <tr class="hover:bg-slate-50/40 transition-all">
+            <td class="py-4 px-6 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-xs">
+                MS
+              </div>
+              <div>
+                <div class="font-semibold text-slate-900">Maha Sobhy</div>
+                <div class="text-xs text-slate-400">maha.s&#64;talenthub.com</div>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">Frontend</span>
+            </td>
+            <td class="py-4 px-6">
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
+                <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span>
+                On Leave
+              </span>
+            </td>
+            <td class="py-4 px-6 text-right">
+              <div class="flex items-center justify-end gap-2">
+                <button class="p-1.5 text-slate-400 hover:text-violet-600 hover:bg-violet-50 rounded-md transition-all" title="Edit Employee">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </button>
+                <button class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-all" title="Delete Employee">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+    
+          <!-- Row 3 -->
+          <tr class="hover:bg-slate-50/40 transition-all">
+            <td class="py-4 px-6 flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-xs">
+                TK
+              </div>
+              <div>
+                <div class="font-semibold text-slate-900">Tarek Kamel</div>
+                <div class="text-xs text-slate-400">tarek.kamel&#64;talenthub.com</div>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">DevOps</span>
+            </td>
+            <td class="py-4 px-6">
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
+                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                Active
+              </span>
+            </td>
+            <td class="py-4 px-6 text-right">
+              <div class="flex items-center justify-end gap-2">
+                <button class="p-1.5 text-slate-400 hover:text-violet-600 hover:bg-violet-50 rounded-md transition-all" title="Edit Employee">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </button>
+                <button class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-all" title="Delete Employee">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+    
+        </tbody>
+      </table>
+    </div>
+    </section>
+    </div>

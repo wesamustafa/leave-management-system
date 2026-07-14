@@ -2,7 +2,7 @@ import { Component, inject, OnInit, HostListener } from '@angular/core';
 import { SidebarService } from '../../../core/services/sidebar.service';
 import { CommonModule } from '@angular/common';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router'
-import { IEmployeeData } from '../../../core/models/auth';
+import { IEmployeeData } from '../../../core/models/employee';
 @Component({
   selector: 'app-layout',
   imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],

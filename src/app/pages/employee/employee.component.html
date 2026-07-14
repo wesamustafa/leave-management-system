@@ -1,1 +1,25 @@
-<p>employee works!</p>
+
+<!-- Breadcrumb Link Stream -->
+<nav class="flex items-center gap-2 text-lg font-medium text-slate-400">
+    <a href="#" class="hover:text-slate-600 transition-colors">Workspace</a>
+    <svg class="w-3.5 h-3.5 text-slate-300 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+    <span class="text-slate-600 font-semibold">Employess</span>
+</nav>   
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+  <div>
+    <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Employees</h1>
+    <p class="text-xl text-slate-500 mt-0.5">Manage your team members and their account status.</p>
+  </div>
+  
+  <!-- زر إضافة الموظف -->
+  <div class="flex items-center">
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-sm font-bold text-white bg-violet-600 hover:bg-violet-700 active:bg-violet-800 px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200" title="Add New Employee">      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+      Add Employee
+    </button>
+  </div>
+</div>
+   <app-employee-list></app-employee-list>
