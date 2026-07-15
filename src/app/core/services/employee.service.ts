@@ -16,4 +16,8 @@ private readonly apiUrl = `${environment.apiBaseUrl}`;
   getAllEmployees(): Observable<IEmployeeData[]> {
     return this.http.get<IEmployeeData[]>(`${this.apiUrl}/GetAllEmployees`);
   }
+  // ميثود الحذف الجديدة
+  deleteEmployee(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/DeleteEmployee/${id}`);
+  }
 }
