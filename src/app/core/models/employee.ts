@@ -4,7 +4,7 @@ export interface IEmployeeData {
   contactNo: string;
   emailId: string;
   deptId: number;
-  password: string;
+  password?: string;
   gender: string;
   role: string;
   createdDate: string; // Rest API returns ISO Date string

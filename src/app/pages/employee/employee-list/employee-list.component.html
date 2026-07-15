@@ -1,5 +1,5 @@
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 ">
- 
+ @if (employees$ | async; as employees) {
  <section class="xl:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden w-full">
     <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
       <div>
@@ -7,7 +7,7 @@
         <p class="text-xs text-slate-400 mt-0.5">Manage your team members and their account status.</p>
       </div>
       <!-- شارة العدد الإجمالي -->
-      <span class="text-xs font-semibold text-violet-600 bg-violet-50 px-2.5 py-1 rounded-full">Total: 3 Members</span>
+      <span class="text-xs font-semibold text-violet-600 bg-violet-50 px-2.5 py-1 rounded-full">Total: {{ employees.length }} Employees</span>
     </div>
     
     <!-- Table Container -->
@@ -16,46 +16,46 @@
         <thead>
           <tr class="bg-slate-50/70 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
             <th class="py-3.5 px-6">Employee</th>
+            <th class="py-3.5 px-6">Employee ID</th>
             <th class="py-3.5 px-6">Contact No</th>
             <th class="py-3.5 px-6">Department</th>
             <th class="py-3.5 px-6">Role</th>
             <th class="py-3.5 px-6">Gender</th>
-            <th class="py-3.5 px-6">Status</th>
             <th class="py-3.5 px-6 text-right">Actions</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
           
           <!-- Row 1 -->
-          <tr class="hover:bg-slate-50/40 transition-all">
+           @for (emp of (employees$ | async); track emp.employeeId){
+             <tr class="hover:bg-slate-50/40 transition-all">
             <td class="py-4 px-6 flex items-center gap-3">
-              <div class="w-9 h-9 rounded-full bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-xs">
-                AH
+              <div class="w-9 h-9 rounded-full bg-slate-100 uppercase text-slate-700 font-bold flex items-center justify-center text-xs">
+                {{emp.employeeName.charAt(0)}}
               </div>
               <div>
-                <div class="font-semibold text-slate-900">Aly Hegazi</div>
-                <div class="text-xs text-slate-400">aly.hegazi&#64;talenthub.com</div>
+                <div class="font-semibold text-slate-900">{{emp.employeeName}}</div>
+                <div class="text-xs text-slate-400">{{emp.emailId}}</div>
               </div>
             </td>
             <td class="py-4 px-6">
-              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">UI Design</span>
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">{{emp.employeeId}}</span>
             </td>
             <td class="py-4 px-6">
-              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">UI Design</span>
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">{{emp.contactNo}}</span>
             </td>
             <td class="py-4 px-6">
-              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">UI Design</span>
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">{{emp.deptId}}</span>
             </td>
             <td class="py-4 px-6">
-              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">UI Design</span>
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">{{emp.role}}</span>
+            </td>
+            <td class="py-4 px-6">
+              <span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">{{emp.gender}}</span>
             </td>
             
-            <td class="py-4 px-6">
-              <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
-                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                Active
-              </span>
-            </td>
+            
+            
             <td class="py-4 px-6 text-right">
               <div class="flex items-center justify-end gap-2">
                 <!-- Edit Button -->
@@ -73,6 +73,8 @@
               </div>
             </td>
           </tr>
+           }
+         
     
           
     
@@ -80,4 +82,5 @@
       </table>
     </div>
     </section>
+  }
     </div>
