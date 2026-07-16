@@ -6,6 +6,6 @@ export interface ILogin {
 export interface ILoginResponse {
   message: string;
   result: boolean;
-  data: IEmployeeData; // Replace with your actual User model if available
+  data: IEmployeeData;
 }
 

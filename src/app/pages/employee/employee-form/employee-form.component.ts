@@ -16,7 +16,10 @@ export class EmployeeFormComponent implements OnInit {
 employeeForm: FormGroup;
 isLoading = signal<boolean>(false);
 private deptService = inject(DepartmentService);
+isEditMode = signal<boolean>(false);
 departments: IDepartment[] = [];
+// جلب داتا الـ Dialog باستخدام دالة inject() الحديثة والأنيقة
+  public data = inject<{ isEdit: boolean, employeeData?: IEmployeeData }>(MAT_DIALOG_DATA);
   constructor(
     private fb: FormBuilder,
     // 1. حقن الـ DialogRef علشان نتحكم في قفل البوب أب من جوه الفورم
@@ -27,6 +30,7 @@ departments: IDepartment[] = [];
   ) {
     // تعريف الفورم
    this.employeeForm = this.fb.group({
+    employeeId: [0],
       name: ['', Validators.required],
       contactNo: ['', [Validators.required, Validators.pattern('^[0-9+ ]{10,15}$')]], // Validation أفضل لرقم الهاتف
       email: ['', [Validators.required, Validators.email]],
@@ -39,6 +43,26 @@ departments: IDepartment[] = [];
   ngOnInit(): void {
     this.loadDepartments(15569); // تمرير الـ parent ID المطلوب
     console.log(localStorage.getItem("leaveUser"))
+    // إذا كانت البيانات الممررة تشير إلى عملية تعديل
+    if (this.data && this.data.isEdit && this.data.employeeData) {
+      this.isEditMode.set(true);
+      const emp = this.data.employeeData;
+
+      // ملء الفورم بالبيانات الحالية تلقائياً
+      this.employeeForm.patchValue({
+        employeeId: emp.employeeId,
+        name: emp.employeeName,
+        contactNo: emp.contactNo,
+        email: emp.emailId,
+        department: emp.deptId,
+        role: emp.role,
+        gender: emp.gender ? (emp.gender.charAt(0).toUpperCase() + emp.gender.slice(1)) : '' // تحويل أول حرف لـ Capital ليطابق الـ Select options
+      });
+
+      // في وضع التعديل، نجعل كلمة المرور غير إجبارية (لأن المستخدم قد لا يرغب بتغييرها)
+      this.employeeForm.get('password')?.clearValidators();
+      this.employeeForm.get('password')?.updateValueAndValidity();
+    }
   }
   // حفظ البيانات وقفل البوب أب مع إرسال البيانات للكومبوننت الأب
   onSubmit() {
@@ -52,15 +76,44 @@ departments: IDepartment[] = [];
     const formValues = this.employeeForm.value;
     // تجهيز البيانات لتطابق الـ IEmployeeData المطلوبة في الـ API
     const employeePayload: Partial<IEmployeeData> = {
+      employeeId: formValues.employeeId || 0,
       employeeName: formValues.name,
       contactNo: formValues.contactNo,
       emailId: formValues.email,
-      password: formValues.password,
+      password: formValues.password || this.data.employeeData?.password || '',
       deptId: formValues.department || 0, // جلب الـ ID أو 0 كقيمة افتراضية
       gender: formValues.gender.toLowerCase(), // الـ API يطلبها male/female
       role: formValues.role,
       createdDate: new Date().toISOString()
     };
+    if (this.isEditMode()) {
+      // 1. استدعاء API التعديل (PUT)
+      this.employeeService.updateEmployee(employeePayload.employeeId!, employeePayload).subscribe({
+        next: (response) => {
+          this.isLoading.set(false);
+          alert("Employee Updated Successfully");
+          this.dialogRef.close(response); 
+        },
+        error: (err) => {
+          this.isLoading.set(false);
+          console.error('Error updating employee:', err);
+        }
+      });
+    } else {
+      // 2. استدعاء API الإضافة (POST)
+      this.employeeService.createEmployee(employeePayload).subscribe({
+        next: (response) => {
+          this.isLoading.set(false);
+          alert("Employee Created Successfully");
+          this.dialogRef.close(response); 
+        },
+        error: (err) => {
+          this.isLoading.set(false);
+          console.error('Error creating employee:', err);
+        }
+      });
+    }
+  
     // استدعاء السيرفيس لإرسال البيانات
     this.employeeService.createEmployee(employeePayload).subscribe({
       next: (response) => {

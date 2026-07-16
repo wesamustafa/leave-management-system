@@ -7,5 +7,5 @@ export interface IEmployeeData {
   password?: string;
   gender: string;
   role: string;
-  createdDate: string; // Rest API returns ISO Date string
+  createdDate: string;
 }

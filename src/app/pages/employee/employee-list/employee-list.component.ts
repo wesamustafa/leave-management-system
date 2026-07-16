@@ -21,10 +21,15 @@ export class EmployeeListComponent implements OnInit {
 // 3. حقن خدمة الـ SnackBar
   private snackBar = inject(MatSnackBar);
   ngOnInit(): void {
-    // ربط الـ Stream: كلما أطلقنا قيمة في refresh$، سيتم جلب الموظفين مجددًا
-    this.employees$ = this.refresh$.pipe(
-      switchMap(() => this.employeeService.getAllEmployees())
-    );
+   // ربط الـ stream بالـ service
+  this.employees$ = this.refresh$.pipe(
+    switchMap(() => this.employeeService.getAllEmployees())
+  );
+
+  // الاستماع لطلبات التحديث القادمة من الفورم عبر الـ Service
+  this.employeeService.refreshList$.subscribe(() => {
+    this.refresh$.next();
+  });
   }
   // ميثود الحذف الجديدة
  deleteEmployee(id: number): void {
@@ -50,4 +55,19 @@ export class EmployeeListComponent implements OnInit {
       });
     }
   }
+  onEdit(empId: number): void {
+  // 1. استدعاء الـ API لجلب تفاصيل الموظف
+  this.employeeService.getEmployeeById(empId).subscribe({
+    next: (res: any) => {
+      // نتحقق من بنية الريسبونس (إذا كان يرجع كـ { result: true, data: {...} })
+      const empData = res.data ? res.data : res;
+      
+      // 2. نرسل البيانات للـ Service والـ Service تتولى الباقي
+      this.employeeService.triggerEdit(empData);
+    },
+    error: (err) => {
+      console.error('Error loading employee:', err);
+      this.snackBar.open('Failed to load employee details', 'Close', { duration: 3000 });
+    }
+  });}
 }
