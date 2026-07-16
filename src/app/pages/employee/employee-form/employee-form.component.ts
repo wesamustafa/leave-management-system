@@ -1,25 +1,22 @@
-import { Component, Inject, signal } from '@angular/core';
+import { Component, inject, Inject, OnInit, signal } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../../../core/services/employee.service';
 import { IEmployeeData } from '../../../core/models/employee';
 import { FormHelper } from '../../../core/helpers/form.helper';
+import { DepartmentService } from '../../../core/services/department.service';
+import { IDepartment } from '../../../core/models/department';
 @Component({
   selector: 'app-employee-form',
   imports: [MatDialogModule, ReactiveFormsModule],
   templateUrl: './employee-form.component.html',
   styleUrl: './employee-form.component.css'
 })
-export class EmployeeFormComponent {
+export class EmployeeFormComponent implements OnInit {
 employeeForm: FormGroup;
 isLoading = signal<boolean>(false);
-// خريطة لتحويل أسماء الأقسام إلى معرفات رقمية للـ API
-  private departmentMap: { [key: string]: number } = {
-    'Engineering': 181,
-    'HR': 182,
-    'Marketing': 183,
-    'Finance': 184
-  };
+private deptService = inject(DepartmentService);
+departments: IDepartment[] = [];
   constructor(
     private fb: FormBuilder,
     // 1. حقن الـ DialogRef علشان نتحكم في قفل البوب أب من جوه الفورم
@@ -39,6 +36,10 @@ isLoading = signal<boolean>(false);
       gender: ['', Validators.required],
     });
   }
+  ngOnInit(): void {
+    this.loadDepartments(15569); // تمرير الـ parent ID المطلوب
+    console.log(localStorage.getItem("leaveUser"))
+  }
   // حفظ البيانات وقفل البوب أب مع إرسال البيانات للكومبوننت الأب
   onSubmit() {
     
@@ -55,7 +56,7 @@ isLoading = signal<boolean>(false);
       contactNo: formValues.contactNo,
       emailId: formValues.email,
       password: formValues.password,
-      deptId: this.departmentMap[formValues.department] || 0, // جلب الـ ID أو 0 كقيمة افتراضية
+      deptId: formValues.department || 0, // جلب الـ ID أو 0 كقيمة افتراضية
       gender: formValues.gender.toLowerCase(), // الـ API يطلبها male/female
       role: formValues.role,
       createdDate: new Date().toISOString()
@@ -84,4 +85,22 @@ isLoading = signal<boolean>(false);
   isFieldInvalid(controlName: string): boolean {
     return FormHelper.isFieldInvalid(this.employeeForm, controlName);
   }
+
+ // components/create-employee/create-employee.component.ts
+private loadDepartments(parentId: number): void {
+  this.deptService.getChildDepartments(parentId).subscribe({
+    next: (res) => {
+      // التأكد من أن الـ API نجح وأن الداتا موجودة قبل الإسناد
+      if (res.result && res.data) {
+        this.departments = res.data; // هنا أسندنا الـ Array الفعلي (res.data)
+      } else {
+        this.departments = [];
+      }
+    },
+    error: (err) => {
+      console.error('Error fetching departments:', err);
+      this.departments = []; // تصفير المصفوفة لتجنب أي كراش في الـ UI
+    }
+  });
+}
 }
